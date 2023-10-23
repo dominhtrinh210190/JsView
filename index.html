@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- To run the current sample code in your own environment, copy this to an html page. -->
+
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://www.jsviews.com/download/jsrender.min.js"></script>
+  <link href="https://www.jsviews.com/samples/samples.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="result"></div>
+ 
+<script id="theTmpl" type="text/x-jsrender">
+    <table>
+        <tr>
+            <td>name</td>
+            <td>{{:name}}</td>
+        </tr>
+        <tr>
+            <td>showNickname</td>
+            <td>{{:showNickname}}</td>
+        </tr>
+        <tr>
+            <td>check</td>
+            <td>
+                {{if showNickname}}
+                    (<span>{{:showNickname}}</span>)
+                {{/if}}
+            </td>
+        </tr> 
+    </table> 
+</script>
+
+<script>
+    var data = [
+    {
+        "name": "do minh trinh",
+        "nickname": "nickname111111",
+        "showNickname": true
+    }
+    ];
+
+    var template = $.templates("#theTmpl");
+
+    var htmlOutput = template.render(data);
+
+    $("#result").html(htmlOutput);
+</script>
+
+</body>
+</html>
