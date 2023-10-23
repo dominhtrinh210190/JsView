@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- To run the current sample code in your own environment, copy this to an html page. -->
+
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://www.jsviews.com/download/jsviews.min.js"></script>
+  <link href="https://www.jsviews.com/samples/samples.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="team"></div>
+
+<script id="teamTemplate" type="text/x-jsrender">
+  <button data-link="{on addMember}">Add</button>
+  <button data-link="{on replaceMembers}">Replace</button>
+  <button data-link="{on changeMembers}">Change</button>
+  <ol>
+    {^{props members}}
+      <li>
+        <input data-link="prop^name"/>
+        {^{>prop^name}}
+        <span class="remove" data-link="{on ~root.removeMember key}"></span>
+      </li>
+    {{/props}}
+  </ol>
+</script>
+
+
+<script>
+var team = {
+  members: {
+    m1: {name: "Robert"},
+    m2: {name: "Sarah"}
+  },
+  addMember: function() {
+    $.observable(this.members).setProperty("n" + cnt, {name: "new" + cnt++});
+  }, 
+  removeMember: function(key) {
+    $.observable(this.members).removeProperty(key);
+  },
+  replaceMembers: function() {
+    $.observable(this).setProperty("members", {m1: {name: "Peter"}, m2: {name: "Octavia"}, m3: {name: "Xavier"}});
+  },
+  changeMembers: function() {
+    for (var property in this.members) {
+      if (property !== $.expando) {
+        $.observable(this.members).setProperty(property, {name: this.members[property].name + cnt++});
+      }
+    }
+  }
+},
+cnt = 1;
+
+$.templates("#teamTemplate").link("#team", team);
+</script>
+
+</body>
+</html>
