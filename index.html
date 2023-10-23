@@ -9,49 +9,51 @@
 </head>
 <body>
 
-<div id="result"></div>
- 
-<script id="theTmpl" type="text/x-jsrender">
-    <table>
-        <tr>
-            <td>name</td>
-            <td>{{:name}}</td>
-        </tr>
-        <tr>
-            <td>showNickname</td>
-            <td>{{:showNickname}}</td>
-        </tr>
-        <tr>
-            <td>check</td>
-            <td>
-                {{if showNickname}}
-                    (<span>{{:showNickname}}</span>)
-                {{/if}}
-            </td>
-        </tr> 
-    </table> 
-</script>
+    <div id="result"></div>
 
-<script>
-    var data = [
-    {
-        "name": "do minh trinh",
-        "nickname": "nickname 1111",
-        "showNickname": true
-    },
-    {
-        "name": "name2",
-        "nickname": "nickname 2222",
-        "showNickname": false
-    }
-    ];
-
+    <script id="theTmpl" type="text/x-jsrender">
+    <b>{{:title}}</b>
+    <ul>
+      {{for members}}
+          <li>
+            {{:name}} lives in <b>{{:address.city}}</b>
+            {^{if check}}
+                <b>{{:check}}</b>,  
+            {{else}}
+                {{:check}}  
+            {{/if}}
+          </li>
+      {{/for}}
+    </ul>
+    </script>
+    
+    <script>
+    var data = {
+      "title": "tiêu đề",
+      "members": [
+        {
+          "name": "Pete",
+          "address": {
+            "city": "Seattle"
+          },
+          "check":true
+        },
+        {
+          "name": "Heidi",
+          "address": {
+            "city": "Sidney"
+          },
+          "check": false
+        }
+      ]
+    };
+    
     var template = $.templates("#theTmpl");
-
+    
     var htmlOutput = template.render(data);
-
+    
     $("#result").html(htmlOutput);
-</script>
+    </script>
 
 </body>
 </html>
